@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">AdSkipHelper</string>
+    <string name="app_name">广告跳过助手</string>
+
+    <string name="touch_helper_service_description">\"跳过开屏广告\"\n芒果TV平台运营中心的副总经理陈超推出了一项名为"摇一摇开屏广告"的新策略，引发了更多对于用户体验的担忧。在这种策略下，用户在不经意间被强制打开广告，这对用户来说无疑是一种糟糕的体验。\n我呼吁对于过度侵扰性广告的关注，同时为用户提供一个下载资源，以便绕过一些不必要的开屏广告。</string>
 </resources>
