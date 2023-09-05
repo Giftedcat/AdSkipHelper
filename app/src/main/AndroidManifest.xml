@@ -16,6 +16,7 @@
 
     <application
         android:allowBackup="true"
+        android:largeHeap="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -46,25 +47,6 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
-
-        <!--    应用安装、卸载receiver    -->
-        <receiver android:name=".receiver.PackageChangeReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-            </intent-filter>
-        </receiver>
-
-        <!--    用户唤醒屏幕    -->
-        <receiver android:name=".receiver.UserPresentReceiver"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-            </intent-filter>
-
-        </receiver>
 
     </application>
 

@@ -6,10 +6,6 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.giftedcat.adskiphelper.event.ProcessActionEvent;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.lang.ref.WeakReference;
 
 /**
@@ -24,7 +20,6 @@ public class AdSkipService extends AccessibilityService {
     protected void onServiceConnected() {
         super.onServiceConnected();
 
-        EventBus.getDefault().register(this);
         serviceWeakReference = new WeakReference<>(this);
         if (serviceImpl == null) {
             serviceImpl = new AdSkipServiceImpl(this);
@@ -48,23 +43,11 @@ public class AdSkipService extends AccessibilityService {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        EventBus.getDefault().unregister(this);
         if (serviceImpl != null) {
             serviceImpl = null;
         }
         serviceWeakReference = null;
         return super.onUnbind(intent);
-    }
-
-    /**
-     * 收到指令
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(ProcessActionEvent event) {
-        AdSkipService service = serviceWeakReference.get();
-        if (service != null) {
-            service.serviceImpl.processActionHandler.sendEmptyMessage(event.getAction());
-        }
     }
 
     public static boolean isServiceRunning() {

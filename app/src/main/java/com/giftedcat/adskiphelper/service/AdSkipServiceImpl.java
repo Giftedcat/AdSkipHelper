@@ -1,42 +1,25 @@
 package com.giftedcat.adskiphelper.service;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.GestureDescription;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Path;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.inputmethod.InputMethodInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.giftedcat.adskiphelper.config.Constant;
 import com.giftedcat.adskiphelper.config.ProcessAction;
-import com.giftedcat.adskiphelper.receiver.PackageChangeReceiver;
-import com.giftedcat.adskiphelper.receiver.UserPresentReceiver;
 import com.giftedcat.adskiphelper.utils.LogUtil;
 import com.giftedcat.adskiphelper.utils.SkipUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 广告跳过具体实现类
