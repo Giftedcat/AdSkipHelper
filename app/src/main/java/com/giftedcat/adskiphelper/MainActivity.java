@@ -1,25 +1,36 @@
 package com.giftedcat.adskiphelper;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.MutableLiveData;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.giftedcat.adskiphelper.service.AdSkipService;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Switch swSkip;
+    private TextView tvServiceState;
+    private Button btnOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,58 +41,26 @@ public class MainActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        tvServiceState.setText(AdSkipService.isServiceRunning() ? "ON" : "OFF");
+    }
+
     private void findViews(){
-        swSkip = findViewById(R.id.sw_skip);
+        tvServiceState = findViewById(R.id.tv_service_state);
+        btnOpen = findViewById(R.id.btn_open);
     }
 
     private void initViews() {
-        swSkip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //TODO controlling helper
-                if (isChecked){
-                    //打开跳过助手
-                    if (isAccessibilitySettingsOn(MainActivity.this)){
-
-                    }else {
-                        showOpenAccessibilityDialog();
-                    }
-                }else {
-                    //关闭跳过助手
-                }
+            public void onClick(View v) {
+                //开启服务
+                showOpenAccessibilityDialog();
             }
         });
-    }
-
-    private boolean isAccessibilitySettingsOn(Context mContext) {
-        int accessibilityEnabled = 0;
-        final String service = getPackageName() + "/" + AdSkipService.class.getCanonicalName();
-        try {
-            accessibilityEnabled = Settings.Secure.getInt(
-                    mContext.getApplicationContext().getContentResolver(),
-                    android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
-        } catch (Settings.SettingNotFoundException e) {
-        }
-        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
-
-        if (accessibilityEnabled == 1) {
-            String settingValue = Settings.Secure.getString(
-                    mContext.getApplicationContext().getContentResolver(),
-                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-            if (settingValue != null) {
-                mStringColonSplitter.setString(settingValue);
-                while (mStringColonSplitter.hasNext()) {
-                    String accessibilityService = mStringColonSplitter.next();
-
-                    if (accessibilityService.equalsIgnoreCase(service)) {
-                        return true;
-                    }
-                }
-            }
-        } else {
-        }
-
-        return false;
     }
 
     /**

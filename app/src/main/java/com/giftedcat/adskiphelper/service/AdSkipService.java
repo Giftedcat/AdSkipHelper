@@ -4,8 +4,6 @@ import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.giftedcat.adskiphelper.event.ProcessActionEvent;
-
 import java.lang.ref.WeakReference;
 
 /**
